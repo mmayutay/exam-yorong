@@ -3,7 +3,7 @@
     <div class="w3-container">
         <div class="w2-responsive">
             <TransitionGroup tag="table" name="fade" class="w3-table w3-bordered">
-                <tr name="tr">
+                <tr>
                     <th>Product Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -12,7 +12,7 @@
                     <th></th>
                     <th></th>
                 </tr>
-                <tr v-for="item in this.listOfAllProducts" v-bind:key="item">
+                <tr v-for="item in this.listOfAllProducts" :key="item.id">
                     <td> <input type="text" v-model="item.name" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'" /></td>
                     <td> <input type="text" v-model="item.price" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'"></td>
                     <td> <input type="text" v-model="item.quantity" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'"></td>
@@ -28,7 +28,9 @@
                             @click="deleteSelectedProduct(item.id, this.listOfAllProducts.indexOf(item))"></i>
                     </td>
                 </tr>
-            </TransitionGroup>
+            </TransitionGroup><br>
+
+            <PaginationComponent @dataToPass="theNewData($event)" @index="changeNewDataOfTable($event)"/>
         </div>
     </div>
     <DisplayItemDetails :userData="dataPassed"></DisplayItemDetails>
@@ -39,8 +41,8 @@
 import { updateSelectedFunction, deleteSelectedFunction, getAllProducts } from '../../services/ProductsService';
 import Swal from 'sweetalert2';
 import DisplayItemDetails from '../../usable-components/CreatedComponents/DisplayItemDetails.vue';
-import { LoadingInitiator } from '../../usable-components/CreatedComponents/LoadingInitiator.vue' 
-// import { storeSelectedData } from '../../usable-components/ItemDetails/partialStorage';
+import { LoadingInitiator } from '../../usable-components/CreatedComponents/LoadingInitiator.vue';
+import PaginationComponent from '@/usable-components/CreatedComponents/PaginationComponent.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -64,9 +66,18 @@ export default defineComponent({
 
 
     name: 'ProductTable',
+    props: ['dataResults'],
     emits: ["addDataToDisplay"],
-    components: { DisplayItemDetails, LoadingInitiator },
+    components: { DisplayItemDetails, LoadingInitiator, PaginationComponent },
     methods: {
+        changeNewDataOfTable(index) {
+            this.listOfAllProducts = this.tempDataHandler[index];
+        },
+        theNewData(result) {            
+            console.log(result)
+            this.tempDataHandler = result;
+            this.listOfAllProducts = result[0];
+        },
         transferSelectedData(selectedItem) {
             this.dataPassed = selectedItem;
             document.getElementById('id01').style.display = 'block';

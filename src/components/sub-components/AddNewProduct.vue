@@ -1,63 +1,143 @@
 <template>
-<LoadingInitiator v-if="bool"></LoadingInitiator>
+    <LoadingInitiator v-if="bool"></LoadingInitiator>
     <div class="container">
         <div class="inputFormAdd">
-            <div class="row">
-                <div class="column">
-                    <input placeholder="Product Name" type="text" id="name" name="name" v-model="name">
-                </div>
-                <div class="column">
-                    <input placeholder="Product Description" type="text" id="desc" name="desc" v-model="description">
-                </div>
-            </div><br>
+            <form @submit.prevent="addNewProduct">
+                <div class="row">
+                    <div class="column">
+                        <div class="form-group">
+                            <input placeholder="Product Name" type="text" id="name" name="pname"
+                                v-model="v$.form.pName.$model">
+                            <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                            <!-- Error Message -->
+                            <div class="input-errors" v-for="(error, index) of v$.form.pName.$errors" :key="index">
+                                <p class="error-msg">{{ error.$message }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                            v-model="v$.form.pDescription.$model">
+                        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                        <!-- Error Message -->
+                        <div class="input-errors" v-for="(error, index) of v$.form.pDescription.$errors" :key="index">
+                            <p class="error-msg">{{ error.$message }}</p>
+                        </div>
+                    </div>
+                </div><br>
 
-            <div class="row">
-                <div class="column">
-                    <input placeholder="Product Price" type="number" id="price" name="price" v-model="price">
-                </div>
-                <div class="column">
-                    <input placeholder="Quantity" type="number" id="Quantity" name="Quantity" v-model="quantity">
-                </div>
-            </div> <br>
+                <div class="row">
+                    <div class="column">
+                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                            v-model="v$.form.pPrice.$model">
+                        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                        <!-- Error Message -->
+                        <div class="input-errors" v-for="(error, index) of v$.form.pPrice.$errors" :key="index">
+                            <p class="error-msg">{{ error.$message }}</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                            v-model="v$.form.pQuantity.$model">
+                        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                        <!-- Error Message -->
+                        <div class="input-errors" v-for="(error, index) of v$.form.pQuantity.$errors" :key="index">
+                            <p class="error-msg">{{ error.$message }}</p>
+                        </div>
+                    </div>
+                </div> <br>
 
-            <div class="row">
-                <input placeholder="Category" style="width: 98%;" type="text" id="category" name="category"
-                    v-model="category">
-            </div> <br>
+                <div class="row">
+                    <input placeholder="Product Name" type="text" id="name" name="pname"
+                        v-model="v$.form.pCategory.$model">
+                    <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                    <!-- Error Message -->
+                    <div class="input-errors" v-for="(error, index) of v$.form.pCategory.$errors" :key="index">
+                        <p class="error-msg">{{ error.$message }}</p>
+                    </div>
+                </div> <br>
 
-            <button @click="addNewProduct()">Submit</button><br><br>
-        </div>        
+                <button :disabled="v$.form.$invalid">Submit</button><br><br>
+            </form>
+        </div>
         <br>
-    </div>    
+    </div>
 </template>        
 <script>
+import useVuelidate from '@vuelidate/core'
+import { required } from '@vuelidate/validators'
 import { addNewProduct } from '@/services/ProductsService';
 import LoadingInitiator from '../../usable-components/CreatedComponents/LoadingInitiator.vue';
 
 import Swal from 'sweetalert2';
 
+export function validName(name) {
+    let validNamePattern = new RegExp("^[a-zA-Z]+(?:[-'\\s][a-zA-Z]+)*$");
+    if (validNamePattern.test(name)) {
+        return true;
+    }
+    return false;
+}
+
 export default {
-    name: 'AddNewProduct',
-    components: { LoadingInitiator},
-    props: {
-        data: {
-            name: "",
-            description: "",
-            price: "",
-            quantity: "",
-            category: "",
-        }
+
+    setup() {
+        return { v$: useVuelidate() }
     },
+
+    name: 'AddNewProduct',
+    components: { LoadingInitiator },
     data() {
         return {
-            bool: false
+            bool: false,
+            form: {
+                pName: "",
+                pDescription: "",
+                pPrice: "",
+                pQuantity: "",
+                pCategory: "",
+            }
+        }
+    },
+
+    validations() {
+        return {
+            form: {
+                pName: {
+                    required, name_validation: {
+                        $validator: validName,
+                        $message: 'Product Name is required!'
+                    }
+                },
+                pDescription: {
+                    required, name_validation: {
+                        $validator: validName,
+                        $message: 'Product Description is required!'
+                    }
+                },
+                pPrice: { required },
+                pQuantity: { required },
+                pCategory: {
+                    required, name_validation: {
+                        $validator: validName,
+                        $message: 'Product Category is required!'
+                    }
+                }
+            },
         }
     },
 
     methods: {
         addNewProduct() {
             this.bool = true;
-            addNewProduct({ name: this.name, description: this.description, price: this.price, quantity: this.quantity, category: this.category }).then(() => {
+            addNewProduct({
+                name: this.form.pName,
+                description: this.form.pDescription,
+                price: this.form.pPrice,
+                quantity: this.form.pQuantity,
+                category: this.form.pCategory
+
+            }).then(() => {
                 this.bool = false;
                 Swal.fire("Item Added!", "An item was successfully Added!", "success")
             });
@@ -143,5 +223,12 @@ button:hover {
     content: "";
     display: table;
     clear: both;
+}
+
+p.error-msg {
+    color: rgb(255, 74, 74);
+    margin: 0;
+    text-align: left;
+    padding-left: 30px;
 }
 </style>

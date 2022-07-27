@@ -3,13 +3,13 @@
     <div id="myIconSideNav" class="iconSideNav" @mouseover="openNav()">
         <div class="imageClass">
             <img src="../assets/Netlink_Logo.jpg" alt="" />
-        </div><br><br><br>
+        </div><br><br>
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn" @click="closeNav()"></a></span>
-        <a class="nav" v-for="option in options" :key="option.id"> <i :class="option.icon"></i></a>
+        <a class="iconNav" v-for="option in options" :key="option.id"> <i :class="option.icon"></i></a>
     </div>
     <div id="mySidenav" class="sidenav">
         <h2 id="net-text" style="text-align: center;"> Netlink Voice </h2>
-        <br><br><br>
+        <br><br>
 
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn"
                 @click="closeNav()">&times;</a></span>
@@ -89,10 +89,6 @@ export default defineComponent({
     width: 200px;
 }
 
-.sidenav a:hover {
-    color: rgb(196, 196, 196);
-}
-
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -128,13 +124,16 @@ img {
     border-radius: 50%;
 }
 
-a.nav {
-    margin-bottom: 10px;
+a.nav, a.iconNav {
+    width: 90%;
+    margin: 10px;
     transition: ease-in 0.3s;
+    border-radius: 10px;
 }
 
+
 a.nav:hover  {
-    background-color: blue;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .iconSideNav {
