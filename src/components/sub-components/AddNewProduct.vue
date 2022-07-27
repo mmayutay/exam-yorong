@@ -1,6 +1,7 @@
 <template>
-    <div class="w3-container container">
-        <div class="w3-card-4 inputForm">
+<LoadingInitiator v-if="bool"></LoadingInitiator>
+    <div class="container">
+        <div class="inputFormAdd">
             <div class="row">
                 <div class="column">
                     <input placeholder="Product Name" type="text" id="name" name="name" v-model="name">
@@ -24,28 +25,40 @@
                     v-model="category">
             </div> <br>
 
-            <button @click="addNewProduct()">Submit</button><br><br><br>
-        </div>
-    </div>
+            <button @click="addNewProduct()">Submit</button><br><br>
+        </div>        
+        <br>
+    </div>    
 </template>        
 <script>
 import { addNewProduct } from '@/services/ProductsService';
+import LoadingInitiator from '../../usable-components/CreatedComponents/LoadingInitiator.vue';
+
 import Swal from 'sweetalert2';
 
 export default {
     name: 'AddNewProduct',
+    components: { LoadingInitiator},
     props: {
         data: {
             name: "",
             description: "",
             price: "",
             quantity: "",
-            category: ""
+            category: "",
         }
     },
+    data() {
+        return {
+            bool: false
+        }
+    },
+
     methods: {
         addNewProduct() {
+            this.bool = true;
             addNewProduct({ name: this.name, description: this.description, price: this.price, quantity: this.quantity, category: this.category }).then(() => {
+                this.bool = false;
                 Swal.fire("Item Added!", "An item was successfully Added!", "success")
             });
         }
@@ -53,12 +66,25 @@ export default {
 }
 </script>
 
-<style scoped>
+<style setup>
 .container {
     width: 100%;
+    animation: fadeInAnimation ease 0.3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
 
-.inputForm {
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.inputFormAdd {
     background-color: rgba(240, 240, 240, 0.5);
     border-radius: 10px;
     margin-left: auto;
@@ -66,6 +92,7 @@ export default {
     text-align: center;
     padding: 40px;
     width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 input {
@@ -76,7 +103,7 @@ input {
     border-radius: 50px;
     outline: none;
     border: 1px solid rgba(184, 184, 184, 0.3);
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
 }
 
 button {
@@ -87,7 +114,7 @@ button {
     border: 1px solid rgb(138, 138, 138);
     background-color: rgb(97, 97, 255);
     color: white;
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0;
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0;
 }
 
 button:hover {

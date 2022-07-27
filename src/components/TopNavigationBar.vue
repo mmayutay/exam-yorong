@@ -4,12 +4,12 @@
         <div class="imageClass">
             <img src="../assets/Netlink_Logo.jpg" alt="" />
         </div><br><br><br>
+        <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn" @click="closeNav()"></a></span>
         <a class="nav" v-for="option in options" :key="option.id"> <i :class="option.icon"></i></a>
     </div>
-    <span style="font-size:50px;cursor:pointer; position: fixed;" @click="openNav()">&#9776;</span>
     <div id="mySidenav" class="sidenav">
         <h2 id="net-text" style="text-align: center;"> Netlink Voice </h2>
-        <br><br>
+        <br><br><br>
 
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn"
                 @click="closeNav()">&times;</a></span>
@@ -17,7 +17,7 @@
                 option.tag
         }}</a>
         <br>
-    </div> <br><br>
+    </div>
 </template>
 
 <script>
@@ -35,7 +35,7 @@ export default defineComponent({
                 { route: "#/", tag: "Home", icon: "fa fa-home" },
                 { route: "#/list", tag: "Product List", icon: "fa fa-list" },
                 { route: "#/add-new-product", tag: "Add New Product", icon: "fa fa-plus" },
-                { route: "#/settings", tag: "Settings", icon: "fa fa-gear" }
+                { route: "#/contact", tag: "Contact Us", icon: "fa fa-address-book" }
             ]
         }
     },
@@ -52,6 +52,7 @@ export default defineComponent({
         },
 
         selectedNav(nav) {
+            localStorage.setItem('currentRoute', nav.tag);
             this.$emit("changeHeaderText", nav.tag)
         }
 
@@ -72,7 +73,10 @@ export default defineComponent({
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 50px;
-    border: 1px solid rgba(119, 119, 119, 0.5);
+    border: 1px solid rgba(119, 119, 119, 0.1);
+    /* -moz-box-shadow: inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #949494;
+    box-shadow: inset 0 0 10px #000000; */
 }
 
 .sidenav a {
@@ -83,7 +87,6 @@ export default defineComponent({
     display: block;
     transition: 0.3s;
     width: 200px;
-
 }
 
 .sidenav a:hover {
@@ -101,6 +104,7 @@ export default defineComponent({
 #main {
     transition: margin-left .5s;
     padding: 16px;
+    box-shadow: 10px 0px rgba(119, 119, 119, 0.5) inset;;
 }
 
 @media screen and (max-height: 450px) {
@@ -126,6 +130,11 @@ img {
 
 a.nav {
     margin-bottom: 10px;
+    transition: ease-in 0.3s;
+}
+
+a.nav:hover  {
+    background-color: blue;
 }
 
 .iconSideNav {

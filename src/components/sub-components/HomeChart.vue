@@ -10,8 +10,13 @@
         <div class="column2">
             <div class="card">
                 <div class="container">
-                    <h4><b>John Doe</b></h4>
-                    <p>Architect & Engineer</p>
+                    <br><br><br>
+                    <h4><b>12</b></h4>
+                    <p>Newly Added Product</p>
+                    <br>
+                    <h4><b>15</b></h4>
+                    <p>Current Product</p>
+                    <br><br><br>
                 </div>
             </div>
         </div>
@@ -22,9 +27,7 @@
 import { Bar } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 
-
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
 
 export default {
     name: 'BarChart',
@@ -84,15 +87,28 @@ export default {
     float: left;
     width: 60%;
     padding: 10px;
-    height: 300px;
-    /* Should be removed. Only for demonstration */
+    animation: fadeInAnimation ease 0.4s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
 }
+
 .column2 {
     float: left;
     width: 40%;
     padding: 10px;
-    height: 300px;
-    /* Should be removed. Only for demonstration */
+    animation: fadeInAnimation ease 0.8s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 /* Clear floats after the columns */
@@ -113,5 +129,6 @@ export default {
 
 .container {
     padding: 2px 16px;
+    text-align: center;
 }
 </style>
