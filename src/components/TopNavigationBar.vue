@@ -9,7 +9,7 @@
     </div>
     <div id="mySidenav" class="sidenav">
         <h2 id="net-text" style="text-align: center;"> Netlink Voice </h2>
-        <br><br>
+        <br><br><br>
 
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn"
                 @click="closeNav()">&times;</a></span>

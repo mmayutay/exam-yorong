@@ -1,5 +1,5 @@
 <template>
-<LoadingInitiator v-if="bool"></LoadingInitiator>
+    <LoadingInitiator v-if="bool"></LoadingInitiator>
     <div class="w3-container">
         <div class="w2-responsive">
             <TransitionGroup tag="table" name="fade" class="w3-table w3-bordered">
@@ -12,16 +12,20 @@
                     <th></th>
                     <th></th>
                 </tr>
-                <tr v-for="item in this.listOfAllProducts" :key="item.id">
-                    <td> <input type="text" v-model="item.name" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'" /></td>
-                    <td> <input type="text" v-model="item.price" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'"></td>
-                    <td> <input type="text" v-model="item.quantity" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'"></td>
-                    <td> <input type="text" v-model="item.category" :readonly="!textEdit" :style="!textEdit ? 'color: rgba(184, 184, 184)' : 'black'"></td>
+                <tr v-for="(item, index) in this.listOfAllProducts" :key="item.id">
+                    <td> <input type="text" v-model="item.name" :readonly="!this.arrayOfBooleans[index]"
+                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'" /></td>
+                    <td> <input type="text" v-model="item.price" :readonly="!this.arrayOfBooleans[index]"
+                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
+                    <td> <input type="text" v-model="item.quantity" :readonly="!this.arrayOfBooleans[index]"
+                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
+                    <td> <input type="text" v-model="item.category" :readonly="!this.arrayOfBooleans[index]"
+                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
                     <td><i class='fa fa-eye' @click="transferSelectedData(item)"></i></td>
-                    <td v-if="!buttonType"><i class='fa fa-edit'
-                            @click="enableEditButton(this.listOfAllProducts.indexOf(item))"></i>
-                    </td>
-                    <td v-if="buttonType"><i class="fa fa-save"
+
+                    <td v-if="!this.arrayOfBooleans[index]"><i class='fa fa-edit' @click="enableEditButton(this.listOfAllProducts.indexOf(item))"></i></td>
+
+                    <td v-if="this.arrayOfBooleans[index]"><i class="fa fa-save"
                             @click="showAlreadyEditedData(this.listOfAllProducts[this.listOfAllProducts.indexOf(item)], this.listOfAllProducts[this.listOfAllProducts.indexOf(item)])"></i>
                     </td>
                     <td><i class='fa fa-trash'
@@ -29,8 +33,10 @@
                     </td>
                 </tr>
             </TransitionGroup><br>
-
-            <PaginationComponent @dataToPass="theNewData($event)" @index="changeNewDataOfTable($event)"/>
+            <Transition name="fading">
+                <PaginationComponent v-if="fade" @dataToPass="theNewData($event)"
+                    @index="changeNewDataOfTable($event)" />
+            </Transition>
         </div>
     </div>
     <DisplayItemDetails :userData="dataPassed"></DisplayItemDetails>
@@ -50,17 +56,18 @@ export default defineComponent({
         return {
             listOfAllProducts: [],
             tempDataHandler: [],
-            buttonType: false,
-            textEdit: false,
+            arrayOfBooleans: [],
             searchQuery: "",
             dataPassed: [],
-            bool: false
+            bool: false,
+            fade: false
         };
     },
     mounted() {
         getAllProducts().then(response => {
-            this.listOfAllProducts = response;
+            this.listOfAllProducts = this.addingBooleanIndex(response);
             this.tempDataHandler = this.listOfAllProducts;
+            this.fade = true;
         });
     },
 
@@ -73,8 +80,7 @@ export default defineComponent({
         changeNewDataOfTable(index) {
             this.listOfAllProducts = this.tempDataHandler[index];
         },
-        theNewData(result) {            
-            console.log(result)
+        theNewData(result) {
             this.tempDataHandler = result;
             this.listOfAllProducts = result[0];
         },
@@ -83,21 +89,18 @@ export default defineComponent({
             document.getElementById('id01').style.display = 'block';
         },
 
-        enableEditButton(index) {
-            console.log(index)
-            this.textEdit = true;
-            this.buttonType = true;
+        enableEditButton(index) {            
+            this.arrayOfBooleans[index] = true;
         },
 
         showAlreadyEditedData(item, index) {
             this.bool = true;
             updateSelectedFunction(item).then((response) => {
+                console.log(this.arrayOfBooleans, index)
+                this.arrayOfBooleans[this.listOfAllProducts.indexOf(index)] = false;
                 this.bool = false;
-                console.log(response)
                 Swal.fire('Updated Done!', "An Item was successfully updated!", 'success')
                 this.listOfAllProducts[index] = item;
-                this.buttonType = false;
-                this.textEdit = false;
             })
         },
 
@@ -123,10 +126,16 @@ export default defineComponent({
                     })
                 }
             })
+        },
+
+
+        addingBooleanIndex(array) {
+            let values = array.map(() => {
+                this.arrayOfBooleans.push(false)
+            })
         }
     }
 })
-
 </script>
 
 <style scoped>
@@ -219,5 +228,30 @@ th {
       animations can be calculated correctly. */
 .fade-leave-active {
     position: absolute;
+}
+
+.fading-enter-active,
+.fading-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fading-enter-from,
+.fading-leave-to {
+    opacity: 0;
+}
+
+.slide-up-enter-active,
+.slide-up-leave-active {
+    transition: all 0.25s ease-out;
+}
+
+.slide-up-enter-from {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.slide-up-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
 }
 </style>

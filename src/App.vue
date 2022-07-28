@@ -11,18 +11,20 @@
 <script>
 import TopNavigationBar from './components/TopNavigationBar.vue';
 import LoadingInitiator from './usable-components/CreatedComponents/LoadingInitiator.vue';
-import  * as storage  from './usable-components/CreatedFunctions/partialStorage.js';
+import * as storage from './usable-components/CreatedFunctions/partialStorage.js';
 
 import ProductTable from './components/sub-components/ProductTable.vue';
 import NotFound from './components/sub-components/NotFound.vue';
 import AddNewProduct from './components/sub-components/AddNewProduct.vue';
+import ContactUs from './components/sub-components/ContactUs.vue'
 import { defineComponent } from 'vue';
 import HomeChart from './components/sub-components/HomeChart.vue';
 
 const routes = {
   '/': HomeChart,
   '/list': ProductTable,
-  '/add-new-product': AddNewProduct
+  '/add-new-product': AddNewProduct,
+  '/contact': ContactUs
 }
 
 export default defineComponent({
@@ -49,7 +51,7 @@ export default defineComponent({
       this.currentPath = window.location.hash
     })
   },
-  methods: {    
+  methods: {
     changeTextHeader(text) {
       this.title = text
     }

@@ -165,13 +165,21 @@ export default {
 }
 
 .inputFormAdd {
-    background-color: rgba(240, 240, 240, 0.5);
     border-radius: 10px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
     padding: 40px;
     width: 80%;
+    box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2);
+    transition: ease 0.3s;
+}
+
+.inputFormAdd:hover {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.inputFormAdd:hover input {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -184,6 +192,7 @@ input {
     outline: none;
     border: 1px solid rgba(184, 184, 184, 0.3);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: ease 0.3s;
 }
 
 button {

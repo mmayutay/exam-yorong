@@ -34,7 +34,7 @@ export default defineComponent({
         return {
             results: 0,
             dataResult: [],
-            selected: 3
+            selected: 5
         }
     },
     mounted() {
@@ -43,7 +43,6 @@ export default defineComponent({
     methods: {
         changeParameterChoose(selected) {
             this.selected = selected;
-            console.log(selected)
             this.dataFetcher(Number(selected))
         },
         // This method is for the behaviour of the pagination
@@ -63,17 +62,10 @@ export default defineComponent({
             }            
             this.$emit('dataToPass', this.dataResult);
         },
-
-        paginationNumbers() {
-            for (let index = 0; index < this.dataResult.length; index++) {
-                console.log(this.dataResult[index])
-            }
-        },
         dataFetcher(num) {
             getAllProducts().then(response => {
                 this.results = response.length;
                 this.checkDivide(response, num);
-                this.paginationNumbers();
             })
         },
         changeTableData(index) {
