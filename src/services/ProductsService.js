@@ -21,7 +21,12 @@ export async function updateSelectedFunction(item) {
     return response.data;
 }
 
-// export async function getSelectedItem(itemId) {
-//     const response = await axios.get(route + 'product/get-selected-item/' + itemId);
-//     return response.data;
-// }
+export async function getSelectedItem(itemId) {
+    const response = await axios.get(route + 'product/get-selected-item/' + itemId);
+    return response.data;
+}
+
+export async function returnAllCategories() {
+    const response = await axios.get(route + 'return-all-categories');
+    return response.data;
+}

@@ -13,7 +13,7 @@
 
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn"
                 @click="closeNav()">&times;</a></span>
-        <a class="nav" v-for="option in options" :key="option.id" :href="option.route" @click="selectedNav(option)">{{
+        <a class="nav cool-link" v-for="option in options" :key="option.id" :href="option.route" @click="selectedNav(option)">{{
                 option.tag
         }}</a>
         <br>
@@ -35,7 +35,8 @@ export default defineComponent({
                 { route: "#/", tag: "Home", icon: "fa fa-home" },
                 { route: "#/list", tag: "Product List", icon: "fa fa-list" },
                 { route: "#/add-new-product", tag: "Add New Product", icon: "fa fa-plus" },
-                { route: "#/contact", tag: "Contact Us", icon: "fa fa-address-book" }
+                { route: "#/contact", tag: "Contact Us", icon: "fa fa-address-book" },
+                { route: '#/logout', tag: 'LogOut', icon: "fa fa-sign-out" }
             ]
         }
     },
@@ -80,7 +81,7 @@ export default defineComponent({
 }
 
 .sidenav a {
-    padding: 8px 8px 8px 32px;
+    padding: 8px;
     text-decoration: none;
     font-size: 20px;
     color: #ffffff;
@@ -131,9 +132,27 @@ a.nav, a.iconNav {
     border-radius: 10px;
 }
 
+a.iconNav {
+    margin-bottom: 13px;
+}
 
-a.nav:hover  {
-    background-color: rgba(255, 255, 255, 0.3);
+.cool-link {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.cool-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.5);
+    transition: width .5s;
+}
+
+.cool-link:hover::after {
+    width: 100%;
 }
 
 .iconSideNav {

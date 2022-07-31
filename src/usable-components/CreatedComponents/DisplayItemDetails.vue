@@ -30,9 +30,15 @@
                     </div>
 
                     <div class="row">
+                        <label for="category">Total Product Amount</label>
+                        <input disabled placeholder="Total Product Amount" style="width: 95%;" type="text" id="amount"
+                            name="category" :value="(userData.quantity * userData.price)">
+                    </div>
+
+                    <div class="row">
                         <label for="category">Category</label>
                         <input disabled placeholder="Category" style="width: 95%;" type="text" id="category"
-                            name="category" :value="userData.category">
+                            name="category" :value="userData.category?.name">
                     </div>
                 </div>
             </div>

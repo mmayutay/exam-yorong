@@ -5,7 +5,7 @@
             <TransitionGroup tag="table" name="fade" class="w3-table w3-bordered">
                 <tr>
                     <th>Product Name</th>
-                    <th>Price</th>
+                    <th>Price ($) </th>
                     <th>Quantity</th>
                     <th>Category</th>
                     <th></th>
@@ -19,11 +19,12 @@
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
                     <td> <input type="text" v-model="item.quantity" :readonly="!this.arrayOfBooleans[index]"
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
-                    <td> <input type="text" v-model="item.category" :readonly="!this.arrayOfBooleans[index]"
+                    <td> <input type="text" v-model="item.category.name" :readonly="!this.arrayOfBooleans[index]"
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
                     <td><i class='fa fa-eye' @click="transferSelectedData(item)"></i></td>
 
-                    <td v-if="!this.arrayOfBooleans[index]"><i class='fa fa-edit' @click="enableEditButton(this.listOfAllProducts.indexOf(item))"></i></td>
+                    <td v-if="!this.arrayOfBooleans[index]"><i class='fa fa-edit'
+                            @click="enableEditButton(this.listOfAllProducts.indexOf(item))"></i></td>
 
                     <td v-if="this.arrayOfBooleans[index]"><i class="fa fa-save"
                             @click="showAlreadyEditedData(this.listOfAllProducts[this.listOfAllProducts.indexOf(item)], this.listOfAllProducts[this.listOfAllProducts.indexOf(item)])"></i>
@@ -44,7 +45,7 @@
 
 <script>
 //  
-import { updateSelectedFunction, deleteSelectedFunction, getAllProducts } from '../../services/ProductsService';
+import { updateSelectedFunction, deleteSelectedFunction, getAllProducts, getSelectedItem } from '../../services/ProductsService';
 import Swal from 'sweetalert2';
 import DisplayItemDetails from '../../usable-components/CreatedComponents/DisplayItemDetails.vue';
 import { LoadingInitiator } from '../../usable-components/CreatedComponents/LoadingInitiator.vue';
@@ -67,7 +68,6 @@ export default defineComponent({
         getAllProducts().then(response => {
             this.listOfAllProducts = this.addingBooleanIndex(response);
             this.tempDataHandler = this.listOfAllProducts;
-            this.fade = true;
         });
     },
 
@@ -85,11 +85,13 @@ export default defineComponent({
             this.listOfAllProducts = result[0];
         },
         transferSelectedData(selectedItem) {
-            this.dataPassed = selectedItem;
-            document.getElementById('id01').style.display = 'block';
+            getSelectedItem(selectedItem.id).then((response) => {
+                this.dataPassed = response;
+                document.getElementById('id01').style.display = 'block';
+            })
         },
 
-        enableEditButton(index) {            
+        enableEditButton(index) {
             this.arrayOfBooleans[index] = true;
         },
 
@@ -130,9 +132,11 @@ export default defineComponent({
 
 
         addingBooleanIndex(array) {
-            let values = array.map(() => {
+            let values = array.map((response) => {
+                console.log(response)
                 this.arrayOfBooleans.push(false)
             })
+            this.fade = true;
         }
     }
 })

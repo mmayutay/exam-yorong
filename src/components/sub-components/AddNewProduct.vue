@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="column">
                         <div class="form-group">
-                            <input placeholder="Product Name" type="text" id="name" name="pname"
+                            <input placeholder="Product Name" type="text" id="pname" name="pname"
                                 v-model="v$.form.pName.$model">
                             <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                             <!-- Error Message -->
@@ -16,7 +16,7 @@
                         </div>
                     </div>
                     <div class="column">
-                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                        <input placeholder="Product Description" type="text" id="description" name="description"
                             v-model="v$.form.pDescription.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -28,7 +28,7 @@
 
                 <div class="row">
                     <div class="column">
-                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                        <input placeholder="Product Price" type="number" id="price" name="price"
                             v-model="v$.form.pPrice.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="column">
-                        <input placeholder="Product Name" type="text" id="name" name="pname"
+                        <input placeholder="Product Quantity" type="number" id="quantity" name="quantity"
                             v-model="v$.form.pQuantity.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -48,8 +48,13 @@
                 </div> <br>
 
                 <div class="row">
-                    <input placeholder="Product Name" type="text" id="name" name="pname"
-                        v-model="v$.form.pCategory.$model">
+                    <select v-model="v$.form.pCategory.$model">
+                        <option disabled value="">Please select one</option>
+                        <option v-for="category of this.listCategories" v-bind:key="category.id">{{ category.name }}</option>
+                        <option>Others</option>
+                    </select>
+                    <!-- <input placeholder="Product Category" type="text" id="category" name="category"
+                        v-model="v$.form.pCategory.$model"> -->
                     <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                     <!-- Error Message -->
                     <div class="input-errors" v-for="(error, index) of v$.form.pCategory.$errors" :key="index">
@@ -64,6 +69,7 @@
     </div>
 </template>        
 <script>
+import { returnAllCategories } from '@/services/ProductsService';
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import { addNewProduct } from '@/services/ProductsService';
@@ -85,6 +91,12 @@ export default {
         return { v$: useVuelidate() }
     },
 
+    mounted() {
+        returnAllCategories().then((response) => {
+            this.listCategories = response;
+        })
+    },  
+
     name: 'AddNewProduct',
     components: { LoadingInitiator },
     data() {
@@ -96,25 +108,16 @@ export default {
                 pPrice: "",
                 pQuantity: "",
                 pCategory: "",
-            }
+            },
+            listCategories: []
         }
     },
 
     validations() {
         return {
             form: {
-                pName: {
-                    required, name_validation: {
-                        $validator: validName,
-                        $message: 'Product Name is required!'
-                    }
-                },
-                pDescription: {
-                    required, name_validation: {
-                        $validator: validName,
-                        $message: 'Product Description is required!'
-                    }
-                },
+                pName: { required },
+                pDescription: { required },
                 pPrice: { required },
                 pQuantity: { required },
                 pCategory: {
@@ -130,17 +133,27 @@ export default {
     methods: {
         addNewProduct() {
             this.bool = true;
-            addNewProduct({
+            console.log(
+                {
                 name: this.form.pName,
                 description: this.form.pDescription,
                 price: this.form.pPrice,
                 quantity: this.form.pQuantity,
                 category: this.form.pCategory
 
-            }).then(() => {
-                this.bool = false;
-                Swal.fire("Item Added!", "An item was successfully Added!", "success")
-            });
+            }
+            )
+            // addNewProduct({
+            //     name: this.form.pName,
+            //     description: this.form.pDescription,
+            //     price: this.form.pPrice,
+            //     quantity: this.form.pQuantity,
+            //     category: this.form.pCategory
+
+            // }).then(() => {
+            //     this.bool = false;
+            //     Swal.fire("Item Added!", "An item was successfully Added!", "success")
+            // });
         }
     }
 }
@@ -183,7 +196,7 @@ export default {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-input {
+input, select {
     margin: 10px;
     width: 95%;
     padding: 10px;

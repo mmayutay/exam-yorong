@@ -33,8 +33,8 @@
                         <div class="w3-container">
                             <hr>
                             <img src="../../assets/yorong.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right">
-                            <p>"Only those who dare to fail greatly can ever achieve greatly."</p><br><br>
-                            <p><b> - Robert F. Kennedy</b></p>
+                            <p>"You don't win a war by fighting each other, you win a war by fighting together."</p><br><br>
+                            <p><b> - Daniel John Ford Padilla</b></p>
                             <br>
                         </div>
                     </div>
