@@ -2,7 +2,7 @@
   <TopNavigationBar @changeHeaderText="changeTextHeader($event)"></TopNavigationBar>
   <div id="main" class="main">
     <div class="classHeader">
-      <h1 style="text-align: center;">{{ title }}</h1>
+      <h1 style="text-align: center;" class="font-semibold dark:text-white">{{ title }}</h1>
     </div><br><br><br>
     <component :is="currentView" />
   </div>

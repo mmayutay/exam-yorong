@@ -3,10 +3,11 @@
     <div class="container">
         <div class="inputFormAdd">
             <form @submit.prevent="addNewProduct">
-                <div class="row">
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div class="column">
                         <div class="form-group">
                             <input placeholder="Product Name" type="text" id="pname" name="pname"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 v-model="v$.form.pName.$model">
                             <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                             <!-- Error Message -->
@@ -17,6 +18,7 @@
                     </div>
                     <div class="column">
                         <input placeholder="Product Description" type="text" id="description" name="description"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             v-model="v$.form.pDescription.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -24,11 +26,10 @@
                             <p class="error-msg">{{ error.$message }}</p>
                         </div>
                     </div>
-                </div><br>
 
-                <div class="row">
                     <div class="column">
                         <input placeholder="Product Price" type="number" id="price" name="price"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             v-model="v$.form.pPrice.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -38,6 +39,7 @@
                     </div>
                     <div class="column">
                         <input placeholder="Product Quantity" type="number" id="quantity" name="quantity"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             v-model="v$.form.pQuantity.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -45,24 +47,37 @@
                             <p class="error-msg">{{ error.$message }}</p>
                         </div>
                     </div>
-                </div> <br>
+                    <div class="column">
+                        <input placeholder="Total Amount ($)" type="number" id="totalAmount" name="totalAmount" disabled
+                            :value="this.form.pPrice * this.form.pQuantity"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    </div>
+                    <!-- <select id="countries"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Choose a country</option>
+                        <option value="US">United States</option>
+                        <option value="CA">Canada</option>
+                        <option value="FR">France</option>
+                        <option value="DE">Germany</option>
+                    </select> -->
 
-                <div class="row">
-                    <select v-model="v$.form.pCategory.$model">
-                        <option disabled value="">Please select one</option>
-                        <option v-for="category of this.listCategories" v-bind:key="category.id">{{ category.name }}</option>
-                        <option>Others</option>
-                    </select>
-                    <!-- <input placeholder="Product Category" type="text" id="category" name="category"
-                        v-model="v$.form.pCategory.$model"> -->
-                    <div class="pre-icon os-icon os-icon-user-male-circle"></div>
-                    <!-- Error Message -->
-                    <div class="input-errors" v-for="(error, index) of v$.form.pCategory.$errors" :key="index">
-                        <p class="error-msg">{{ error.$message }}</p>
+                    <div class="column">
+                        <select
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-add"
+                            @change="returnIdSelectCateg($event.target.value)" v-model="v$.form.pCategory.$model">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="category of this.listCategories" v-bind:key="category.id">{{ category.name }}
+                            </option>
+                            <option>Others</option>
+                        </select>
+                        <div class="pre-icon os-icon os-icon-user-male-circle"></div>
+                        <div class="input-errors" v-for="(error, index) of v$.form.pCategory.$errors" :key="index">
+                            <p class="error-msg">{{ error.$message }}</p>
+                        </div>
                     </div>
                 </div> <br>
 
-                <button :disabled="v$.form.$invalid">Submit</button><br><br>
+                <button class="button" :disabled="v$.form.$invalid">Submit</button><br><br>
             </form>
         </div>
         <br>
@@ -95,7 +110,7 @@ export default {
         returnAllCategories().then((response) => {
             this.listCategories = response;
         })
-    },  
+    },
 
     name: 'AddNewProduct',
     components: { LoadingInitiator },
@@ -109,7 +124,8 @@ export default {
                 pQuantity: "",
                 pCategory: "",
             },
-            listCategories: []
+            listCategories: [],
+            selectedCategory: ''
         }
     },
 
@@ -131,29 +147,26 @@ export default {
     },
 
     methods: {
+        returnIdSelectCateg(value) {
+            let selectedValue = this.listCategories.map(response => {
+                return value === response.name ? response.id : undefined;
+            })
+            this.selectedCategory = selectedValue[0];
+        },
         addNewProduct() {
             this.bool = true;
-            console.log(
-                {
+            this.form.pCategory = this.selectedCategory;
+            addNewProduct({
                 name: this.form.pName,
                 description: this.form.pDescription,
                 price: this.form.pPrice,
                 quantity: this.form.pQuantity,
                 category: this.form.pCategory
 
-            }
-            )
-            // addNewProduct({
-            //     name: this.form.pName,
-            //     description: this.form.pDescription,
-            //     price: this.form.pPrice,
-            //     quantity: this.form.pQuantity,
-            //     category: this.form.pCategory
-
-            // }).then(() => {
-            //     this.bool = false;
-            //     Swal.fire("Item Added!", "An item was successfully Added!", "success")
-            // });
+            }).then(() => {
+                this.bool = false;
+                Swal.fire("Item Added!", "An item was successfully Added!", "success")
+            });
         }
     }
 }
@@ -196,8 +209,12 @@ export default {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-input, select {
-    margin: 10px;
+.inputFormAdd:hover .select-add {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+input,
+.select-add {
     width: 95%;
     padding: 10px;
     padding-left: 30px;
@@ -208,7 +225,7 @@ input, select {
     transition: ease 0.3s;
 }
 
-button {
+.button {
     width: 98%;
     padding: 15px;
     border-radius: 50px;
@@ -219,7 +236,7 @@ button {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0;
 }
 
-button:hover {
+.button:hover {
     background-color: rgb(77, 77, 203);
 }
 
@@ -230,7 +247,7 @@ button:hover {
 /* Create two equal columns that floats next to each other */
 .column {
     float: left;
-    width: 50%;
+    width: 100%;
     /* Should be removed. Only for demonstration */
 }
 

@@ -13,6 +13,7 @@
                     <div class="row">
                         <label for="desc">Description</label>
                         <input disabled placeholder="Product Description" type="text" id="desc" name="desc"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             :value="userData.description">
                     </div>
 
@@ -20,11 +21,13 @@
                         <div class="column">
                             <label for="price">Price</label>
                             <input disabled placeholder="Product Price" type="number" id="price" name="price"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 :value="userData.price">
                         </div>
                         <div class="column">
                             <label for="quantity">Quantity</label>
                             <input disabled placeholder="Quantity" type="number" id="Quantity" name="quantity"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 :value="userData.quantity">
                         </div>
                     </div>
@@ -32,12 +35,14 @@
                     <div class="row">
                         <label for="category">Total Product Amount</label>
                         <input disabled placeholder="Total Product Amount" style="width: 95%;" type="text" id="amount"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             name="category" :value="(userData.quantity * userData.price)">
                     </div>
 
                     <div class="row">
                         <label for="category">Category</label>
                         <input disabled placeholder="Category" style="width: 95%;" type="text" id="category"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             name="category" :value="userData.category?.name">
                     </div>
                 </div>

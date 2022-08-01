@@ -3,12 +3,12 @@
     <div id="myIconSideNav" class="iconSideNav" @mouseover="openNav()">
         <div class="imageClass">
             <img src="../assets/Netlink_Logo.jpg" alt="" />
-        </div><br><br>
+        </div><br>
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn" @click="closeNav()"></a></span>
         <a class="iconNav" v-for="option in options" :key="option.id"> <i :class="option.icon"></i></a>
     </div>
     <div id="mySidenav" class="sidenav">
-        <h2 id="net-text" style="text-align: center;"> Netlink Voice </h2>
+        <h2 id="net-text" style="text-align: center;" class="text-4xl dark:text-white"> Netlink Voice </h2>
         <br><br><br>
 
         <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn"

@@ -14,13 +14,27 @@
                 </tr>
                 <tr v-for="(item, index) in this.listOfAllProducts" :key="item.id">
                     <td> <input type="text" v-model="item.name" :readonly="!this.arrayOfBooleans[index]"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'" /></td>
                     <td> <input type="text" v-model="item.price" :readonly="!this.arrayOfBooleans[index]"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
                     <td> <input type="text" v-model="item.quantity" :readonly="!this.arrayOfBooleans[index]"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
-                    <td> <input type="text" v-model="item.category.name" :readonly="!this.arrayOfBooleans[index]"
-                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"></td>
+                    <td>
+                        <select
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 select-table"
+                            @change="changeParameterChoose($event.target.value)" v-model="item.category.name"
+                            :disabled="!this.arrayOfBooleans[index]">
+                            <option disabled value="">Please select one</option>
+                            <option v-for="category of this.allCategories" :key="category.id">{{ category.name }}
+                            </option>
+                        </select>
+                        <!-- <input type="text" v-model="item.category.name" :readonly="!this.arrayOfBooleans[index]"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            :style="!this.arrayOfBooleans[index] ? 'color: rgba(184, 184, 184)' : 'black'"> -->
+                    </td>
                     <td><i class='fa fa-eye' @click="transferSelectedData(item)"></i></td>
 
                     <td v-if="!this.arrayOfBooleans[index]"><i class='fa fa-edit'
@@ -45,7 +59,7 @@
 
 <script>
 //  
-import { updateSelectedFunction, deleteSelectedFunction, getAllProducts, getSelectedItem } from '../../services/ProductsService';
+import { updateSelectedFunction, deleteSelectedFunction, getAllProducts, getSelectedItem, returnAllCategories } from '../../services/ProductsService';
 import Swal from 'sweetalert2';
 import DisplayItemDetails from '../../usable-components/CreatedComponents/DisplayItemDetails.vue';
 import { LoadingInitiator } from '../../usable-components/CreatedComponents/LoadingInitiator.vue';
@@ -61,7 +75,8 @@ export default defineComponent({
             searchQuery: "",
             dataPassed: [],
             bool: false,
-            fade: false
+            fade: false,
+            allCategories: []
         };
     },
     mounted() {
@@ -69,6 +84,10 @@ export default defineComponent({
             this.listOfAllProducts = this.addingBooleanIndex(response);
             this.tempDataHandler = this.listOfAllProducts;
         });
+
+        returnAllCategories().then(response => {
+            this.allCategories = response;
+        })
     },
 
 
@@ -143,18 +162,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-input[type=text],
-input[type=number],
-select {
+.select-table {
     width: 100%;
     padding: 10px 18px;
     display: inline-block;
-    border-radius: 50px;
     box-sizing: border-box;
     outline: none;
     padding-left: 30px;
-    border: 1px solid rgba(184, 184, 184, 0.3);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -174,9 +188,9 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-div.input {
+.input {
     border-radius: 5px;
-    padding: 20px;
+    margin: 10px;
 }
 
 .nav {
