@@ -6,8 +6,8 @@
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div class="column">
                         <div class="form-group">
-                            <input placeholder="Product Name" type="text" id="pname" name="pname"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            <input placeholder="Product Name" type="text" name="pname"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                                 v-model="v$.form.pName.$model">
                             <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                             <!-- Error Message -->
@@ -18,7 +18,7 @@
                     </div>
                     <div class="column">
                         <input placeholder="Product Description" type="text" id="description" name="description"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             v-model="v$.form.pDescription.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -29,7 +29,7 @@
 
                     <div class="column">
                         <input placeholder="Product Price" type="number" id="price" name="price"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             v-model="v$.form.pPrice.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -39,7 +39,7 @@
                     </div>
                     <div class="column">
                         <input placeholder="Product Quantity" type="number" id="quantity" name="quantity"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input"
                             v-model="v$.form.pQuantity.$model">
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <!-- Error Message -->
@@ -50,16 +50,8 @@
                     <div class="column">
                         <input placeholder="Total Amount ($)" type="number" id="totalAmount" name="totalAmount" disabled
                             :value="this.form.pPrice * this.form.pQuantity"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input">
                     </div>
-                    <!-- <select id="countries"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Choose a country</option>
-                        <option value="US">United States</option>
-                        <option value="CA">Canada</option>
-                        <option value="FR">France</option>
-                        <option value="DE">Germany</option>
-                    </select> -->
 
                     <div class="column">
                         <select
@@ -68,7 +60,6 @@
                             <option disabled value="">Please select one</option>
                             <option v-for="category of this.listCategories" v-bind:key="category.id">{{ category.name }}
                             </option>
-                            <option>Others</option>
                         </select>
                         <div class="pre-icon os-icon os-icon-user-male-circle"></div>
                         <div class="input-errors" v-for="(error, index) of v$.form.pCategory.$errors" :key="index">
@@ -161,7 +152,7 @@ export default {
                 description: this.form.pDescription,
                 price: this.form.pPrice,
                 quantity: this.form.pQuantity,
-                category: this.form.pCategory
+                category_id: this.form.pCategory
 
             }).then(() => {
                 this.bool = false;
@@ -197,32 +188,28 @@ export default {
     text-align: center;
     padding: 40px;
     width: 80%;
-    box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px 2px rgba(63, 63, 63, 0.2);
     transition: ease 0.3s;
 }
 
 .inputFormAdd:hover {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(63, 63, 63, 0.2);
 }
 
 .inputFormAdd:hover input {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px 0 rgba(63, 63, 63, 0.2);
 }
 
 .inputFormAdd:hover .select-add {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 3px 6px 0 rgba(63, 63, 63, 0.2);
 }
 
-input,
+.input,
 .select-add {
-    width: 95%;
     padding: 10px;
     padding-left: 30px;
-    border-radius: 50px;
     outline: none;
-    border: 1px solid rgba(184, 184, 184, 0.3);
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-    transition: ease 0.3s;
+    box-shadow: 0 2px 4px 0 rgba(63, 63, 63, 0.2);
 }
 
 .button {

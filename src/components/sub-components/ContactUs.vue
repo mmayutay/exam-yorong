@@ -1,7 +1,8 @@
 <template>
     <Transition name="fade">
         <div v-if="show" class="mainContact">
-            <div class="w3-card-4 about-section">
+            <div
+                class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 about-section">
                 <p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
                     totam rem
                     aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt
@@ -24,16 +25,14 @@
             <div class="contactRow">
 
                 <div class="contactColumn">
-                    <div class="w3-card-4 card">
-
-                        <header class="w3-container w3-light-grey">
-                            <h3>Raymond Jay Yorong</h3>
-                        </header>
+                    <div
+                        class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 card">
 
                         <div class="w3-container">
                             <hr>
                             <img src="../../assets/yorong.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right">
-                            <p>"You don't win a war by fighting each other, you win a war by fighting together."</p><br><br>
+                            <p>"You don't win a war by fighting each other, you win a war by fighting together."</p>
+                            <br><br>
                             <p><b> - Daniel John Ford Padilla</b></p>
                             <br>
                         </div>
@@ -48,10 +47,8 @@
                 </div>
 
                 <div v-if="show" class="contactColumn">
-                    <div class="w3-card-4 card">
-                        <header class="w3-container w3-light-grey">
-                            <h3>Monkey D. Luffy</h3>
-                        </header>
+                    <div
+                        class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 card">
                         <div class="w3-container">
                             <hr>
                             <img src="../../assets/luffy.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right">
@@ -67,10 +64,8 @@
             <div class="contactRow">
 
                 <div v-if="show" class="contactColumn">
-                    <div class="w3-card-4 card">
-                        <header class="w3-container w3-light-grey">
-                            <h3>Roronoa Zoro</h3>
-                        </header>
+                    <div
+                        class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 card">
                         <div class="w3-container">
                             <hr>
                             <img src="../../assets/zoro.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right">
@@ -92,10 +87,8 @@
                 </div>
 
                 <div v-if="show" class="contactColumn">
-                    <div class="w3-card-4 card">
-                        <header class="w3-container w3-light-grey">
-                            <h3>Vinsmoke Sanji</h3>
-                        </header>
+                    <div
+                        class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700 card">
                         <div class="w3-container">
                             <hr>
                             <img src="../../assets/sanji.jpg" alt="Avatar" class="w3-left w3-circle w3-margin-right">
@@ -106,7 +99,12 @@
                     </div>
                 </div>
 
-            </div>
+            </div><br>
+            <footer class="p-4 bg-white rounded-lg shadow md:px-6 md:py-8 dark:bg-gray-900">
+                <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+                <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2022 <a class="hover:underline">Flowbite™</a>. All Rights Reserved.
+                </span>
+            </footer>
         </div>
     </Transition>
 
@@ -190,7 +188,7 @@ img {
 }
 
 .card:hover {
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
 }
 
 .card img {
@@ -198,7 +196,7 @@ img {
 }
 
 .card:hover img {
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.5);
 }
 
 .about-section {

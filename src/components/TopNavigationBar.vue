@@ -4,7 +4,7 @@
         <div class="imageClass">
             <img src="../assets/Netlink_Logo.jpg" alt="" />
         </div><br>
-        <span><a href="javascript:void(0)" style="text-align: right;" class="closebtn" @click="closeNav()"></a></span>
+        <span><a style="text-align: right;" class="closebtn"></a></span>
         <a class="iconNav" v-for="option in options" :key="option.id"> <i :class="option.icon"></i></a>
     </div>
     <div id="mySidenav" class="sidenav">
@@ -35,6 +35,7 @@ export default defineComponent({
                 { route: "#/", tag: "Home", icon: "fa fa-home" },
                 { route: "#/list", tag: "Product List", icon: "fa fa-list" },
                 { route: "#/add-new-product", tag: "Add New Product", icon: "fa fa-plus" },
+                { route: "#/add-new-product", tag: "Add New Category", icon: "fa fa-plus" },
                 { route: "#/contact", tag: "Contact Us", icon: "fa fa-address-book" },
                 { route: '#/logout', tag: 'LogOut', icon: "fa fa-sign-out" }
             ]
@@ -83,7 +84,7 @@ export default defineComponent({
 .sidenav a {
     padding: 8px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 17px;
     color: #ffffff;
     display: block;
     transition: 0.3s;
@@ -171,7 +172,7 @@ a.iconNav {
 .iconSideNav a {
     padding: 8px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 17px;
     color: #ffffff;
     display: block;
     transition: 0.3s;

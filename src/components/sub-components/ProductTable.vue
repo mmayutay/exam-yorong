@@ -58,7 +58,6 @@
 </template>
 
 <script>
-//  
 import { updateSelectedFunction, deleteSelectedFunction, getAllProducts, getSelectedItem, returnAllCategories } from '../../services/ProductsService';
 import Swal from 'sweetalert2';
 import DisplayItemDetails from '../../usable-components/CreatedComponents/DisplayItemDetails.vue';
@@ -152,9 +151,10 @@ export default defineComponent({
 
         addingBooleanIndex(array) {
             let values = array.map((response) => {
-                console.log(response)
                 this.arrayOfBooleans.push(false)
+                return response;
             })
+            console.log(values)
             this.fade = true;
         }
     }
@@ -171,6 +171,7 @@ export default defineComponent({
     padding-left: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(120, 120, 120, 0.5);
 }
 
 input[type=submit] {
